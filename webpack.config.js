@@ -61,8 +61,7 @@ const webpackConfig = {
   output: {
     path: OUTPUT_PATH,
     publicPath: '',
-    filename: '[name].bundle.js',
-    sourceMapFilename: '[name].map'
+    filename: '[name].bundle.js'
   },
   plugins: [
     getWebpackCompiler(),
@@ -134,6 +133,7 @@ const webpackEnv = {
   },
   // Development
   development: {
+    devtool: 'cheap-module-source-map',
     entry: {
       polyfills: 'polyfills.ts',
       main: 'main.ts'
