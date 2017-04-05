@@ -50,7 +50,7 @@ function getWebpackCompiler () {
 }
 
 const webpackConfig = {
-  context: SOURCE_PATH,
+  context: __dirname,
   resolve: {
     extensions: ['.ts', '.js'],
     modules: [
@@ -116,13 +116,13 @@ const webpackEnv = {
   production: {
     devtool: 'source-map',
     entry: {
-      polyfills: 'polyfills.ts',
-      main: 'main.ts'
+      polyfills: path.join(SOURCE_PATH, 'polyfills.ts'),
+      main: path.join(SOURCE_PATH, 'main.ts')
     },
     plugins: [
       new HtmlPlugin({
         filetype: 'pug',
-        template: 'index.pug',
+        template: path.join(SOURCE_PATH, 'index.pug'),
         hash: true
       }),
       new webpack.NormalModuleReplacementPlugin(
@@ -133,10 +133,11 @@ const webpackEnv = {
   },
   // Development
   development: {
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
+    // devtool: 'cheap-module-source-map',
     entry: {
-      polyfills: 'polyfills.ts',
-      main: 'main.ts'
+      polyfills: path.join(SOURCE_PATH, 'polyfills.ts'),
+      main: path.join(SOURCE_PATH, 'main.ts')
     },
     plugins: [
       new WriteFilePlugin({
@@ -144,7 +145,7 @@ const webpackEnv = {
       }),
       new HtmlPlugin({
         filetype: 'pug',
-        template: 'index.pug',
+        template: path.join(SOURCE_PATH, 'index.pug'),
         hash: true
       })
     ],
