@@ -1,13 +1,13 @@
-import { NgtestPage } from './app.po';
+import { NgtestPage } from './app.po'
 
 describe('ngtest App', () => {
-  let page: NgtestPage;
+  let page: TestPage
   beforeEach(() => {
-    page = new NgtestPage();
-  });
+    page = new TestPage()
+  })
   it('should display message saying app works', async () => {
-    await page.navigateTo();
+    await page.navigateTo()
     let text = await page.getParagraphText()
-    expect(text).toEqual('app works!');
-  });
-});
+    expect(text).toEqual('app works!')
+  })
+})

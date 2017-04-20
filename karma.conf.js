@@ -1,6 +1,7 @@
 const webpackConfig = require('./webpack.config')
 
 module.exports = function (config) {
+  this.test()
   config.set({
     basePath: '',
     frameworks: ['jasmine'],

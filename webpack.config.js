@@ -4,7 +4,6 @@ const webpackMerge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ngToolsWebpack = require('@ngtools/webpack')
 const HtmlPlugin = require('html-webpack-plugin')
-const WriteFilePlugin = require('write-file-webpack-plugin');
 
 const TEST_ASSETS = /assets\/.*\.scss$/;
 const OUTPUT_PATH = path.resolve(__dirname, 'dist')
@@ -133,16 +132,12 @@ const webpackEnv = {
   },
   // Development
   development: {
-    devtool: 'source-map',
-    // devtool: 'cheap-module-source-map',
+    devtool: 'inline-source-map',
     entry: {
       polyfills: path.join(SOURCE_PATH, 'polyfills.ts'),
       main: path.join(SOURCE_PATH, 'main.ts')
     },
     plugins: [
-      new WriteFilePlugin({
-        log: false
-      }),
       new HtmlPlugin({
         filetype: 'pug',
         template: path.join(SOURCE_PATH, 'index.pug'),

@@ -5,6 +5,10 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
+//
+// http://willyelm.com
+//
+
 @NgModule({
   declarations: [
     AppComponent
