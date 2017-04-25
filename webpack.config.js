@@ -23,29 +23,23 @@ const STATS = {
 }
 
 function getWebpackCompiler () {
-  let plugin
+  let options = {
+    tsConfigPath: './src/tsconfig.app.json'
+  }
   switch (process.env.NODE_ENV) {
     case 'testing':
-      plugin = new AotPlugin({
-        tsConfigPath: './src/tsconfig.spec.json',
-        skipCodeGeneration: true
-      })
+      options.skipCodeGeneration = true
+      options.tsConfigPath = './src/tsconfig.spec.json'
       break
     case 'development':
-      plugin = new AotPlugin({
-        tsConfigPath: './src/tsconfig.app.json',
-        mainPath: path.resolve(__dirname, SOURCE_PATH, 'main.ts'),
-        skipCodeGeneration: true
-      })
+      options.skipCodeGeneration = true
+      options.mainPath = path.resolve(__dirname, SOURCE_PATH, 'main.ts')
       break
     case 'production':
-      plugin = new AotPlugin({
-        tsConfigPath: './src/tsconfig.app.json',
-        mainPath: path.resolve(__dirname, SOURCE_PATH, 'main.ts')
-      })
+      options.mainPath = path.resolve(__dirname, SOURCE_PATH, 'main.ts')
       break
   }
-  return plugin
+  return new AotPlugin(options)
 }
 
 const webpackConfig = {

@@ -1,4 +1,4 @@
-import { NgtestPage } from './app.po'
+import { TestPage } from './app.po'
 
 describe('ngtest App', () => {
   let page: TestPage
