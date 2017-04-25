@@ -1,7 +1,6 @@
 const webpackConfig = require('./webpack.config')
 
 module.exports = function (config) {
-  this.test()
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
@@ -9,7 +8,8 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-webpack'),
-      require('karma-sourcemap-loader')
+      require('karma-sourcemap-loader'),
+      require('karma-jasmine-html-reporter')
     ],
     client:{
       clearContext: false
@@ -27,7 +27,7 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: webpackConfig.stats
     },
-    reporters: ['progress'],
+    reporters: ['progress', 'kjhtml'],
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,

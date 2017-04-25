@@ -24,6 +24,5 @@ export class AppComponent {
   }
   constructor () {
     console.log("Current User", this.user)
-    console.log('app component loaded')
   }
 }

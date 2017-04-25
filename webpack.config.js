@@ -1,9 +1,9 @@
 const path = require('path')
-const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const ngToolsWebpack = require('@ngtools/webpack')
 const HtmlPlugin = require('html-webpack-plugin')
+const { DefinePlugin, ProgressPlugin, optimize, ContextReplacementPlugin, NormalModuleReplacementPlugin } = require('webpack')
+const { AotPlugin } = require('@ngtools/webpack')
 
 const TEST_ASSETS = /assets\/.*\.scss$/;
 const OUTPUT_PATH = path.resolve(__dirname, 'dist')
@@ -26,20 +26,20 @@ function getWebpackCompiler () {
   let plugin
   switch (process.env.NODE_ENV) {
     case 'testing':
-      plugin = new ngToolsWebpack.AotPlugin({
+      plugin = new AotPlugin({
         tsConfigPath: './src/tsconfig.spec.json',
         skipCodeGeneration: true
       })
       break
     case 'development':
-      plugin = new ngToolsWebpack.AotPlugin({
+      plugin = new AotPlugin({
         tsConfigPath: './src/tsconfig.app.json',
         mainPath: path.resolve(__dirname, SOURCE_PATH, 'main.ts'),
         skipCodeGeneration: true
       })
       break
     case 'production':
-      plugin = new ngToolsWebpack.AotPlugin({
+      plugin = new AotPlugin({
         tsConfigPath: './src/tsconfig.app.json',
         mainPath: path.resolve(__dirname, SOURCE_PATH, 'main.ts')
       })
@@ -64,20 +64,21 @@ const webpackConfig = {
   },
   plugins: [
     getWebpackCompiler(),
+    new ProgressPlugin(),
     new ExtractTextPlugin('main.css'),
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({
+    new optimize.CommonsChunkPlugin({
       name: 'vendor',
       chunks: ['main'],
       minChunks(module) {
         return /node_modules/.test(module.resource)
       }
     }),
-    new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
+    new ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
       SOURCE_PATH, {
         // your Angular Async Route paths relative to this root directory
       })
@@ -113,7 +114,7 @@ const webpackConfig = {
 const webpackEnv = {
   // Production
   production: {
-    devtool: 'source-map',
+    // devtool: 'source-map',
     entry: {
       polyfills: path.join(SOURCE_PATH, 'polyfills.ts'),
       main: path.join(SOURCE_PATH, 'main.ts')
@@ -124,10 +125,32 @@ const webpackEnv = {
         template: path.join(SOURCE_PATH, 'index.pug'),
         hash: true
       }),
-      new webpack.NormalModuleReplacementPlugin(
+      new NormalModuleReplacementPlugin(
         /src\/environments\/environment.ts/,
         'environment.production.ts'
-      )
+      ),
+      new optimize.UglifyJsPlugin({
+        beautify: false,
+        output: {
+          comments: false
+        },
+        mangle: {
+          screw_ie8: true
+        },
+        compress: {
+          screw_ie8: true,
+          warnings: false,
+          conditionals: true,
+          unused: true,
+          comparisons: true,
+          sequences: true,
+          dead_code: true,
+          evaluate: true,
+          if_return: true,
+          join_vars: true,
+          negate_iife: false
+        }
+      })
     ]
   },
   // Development
