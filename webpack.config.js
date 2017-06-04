@@ -5,7 +5,7 @@ const HtmlPlugin = require('html-webpack-plugin')
 const { DefinePlugin, ProgressPlugin, optimize, ContextReplacementPlugin, NormalModuleReplacementPlugin } = require('webpack')
 const { AotPlugin } = require('@ngtools/webpack')
 
-const TEST_ASSETS = /assets\/.*\.scss$/;
+const TEST_ASSETS = /assets[\/\\].*\.scss$/;
 const OUTPUT_PATH = path.resolve(__dirname, 'dist')
 const SOURCE_PATH = path.resolve(__dirname, 'src')
 const STATS = {
