@@ -58,6 +58,7 @@ const webpackConfig = {
   },
   plugins: [
     getWebpackCompiler(),
+    new optimize.OccurrenceOrderPlugin(true),
     new ProgressPlugin(),
     new ExtractTextPlugin('main.css'),
     new DefinePlugin({
@@ -117,6 +118,7 @@ const webpackEnv = {
       new HtmlPlugin({
         filetype: 'pug',
         template: path.join(SOURCE_PATH, 'index.pug'),
+        chunksSortMode: 'none',
         hash: true
       }),
       new NormalModuleReplacementPlugin(
