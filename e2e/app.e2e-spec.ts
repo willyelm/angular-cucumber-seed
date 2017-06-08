@@ -7,7 +7,7 @@ describe('ngtest App', () => {
   })
   it('should display message saying app works', async () => {
     await page.navigateTo()
-    let text = await page.getParagraphText()
+    const text = await page.getParagraphText()
     expect(text).toEqual('app works!')
   })
 })
