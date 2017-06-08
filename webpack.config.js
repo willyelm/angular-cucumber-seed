@@ -58,7 +58,6 @@ const webpackConfig = {
   },
   plugins: [
     getWebpackCompiler(),
-    new optimize.OccurrenceOrderPlugin(true),
     new ProgressPlugin(),
     new ExtractTextPlugin('main.css'),
     new DefinePlugin({
@@ -73,6 +72,7 @@ const webpackConfig = {
         return /node_modules/.test(module.resource)
       }
     }),
+    new optimize.OccurrenceOrderPlugin(true),
     new ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)src(\\|\/)linker/,
       SOURCE_PATH, {
         // your Angular Async Route paths relative to this root directory
@@ -118,7 +118,7 @@ const webpackEnv = {
       new HtmlPlugin({
         filetype: 'pug',
         template: path.join(SOURCE_PATH, 'index.pug'),
-        chunksSortMode: 'none',
+        // chunksSortMode: 'none',
         hash: true
       }),
       new NormalModuleReplacementPlugin(

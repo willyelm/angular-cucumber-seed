@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../lib/app",
     "module": "es2015",
-    "baseUrl": "",
+    "target": "es5",
     "types": []
   },
   "exclude": [

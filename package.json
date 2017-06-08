@@ -4,12 +4,12 @@
   "author": "Williams Medina <williams.medinaa@gmail.com>",
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
-    "build": "NODE_ENV=production webpack",
-    "prebuild": "npm run lint",
+    "lint": "tslint --project tsconfig.json src/**/*.ts",
     "test": "NODE_ENV=testing karma start",
+    "build": "NODE_ENV=production webpack",
+    "prebuild": "npm run lint && npm run test",
     "webdriver": "webdriver-manager update",
-    "e2e": "NODE_ENV=testing protractor",
-    "lint": "tslint --project tsconfig.json src/**/*.ts"
+    "e2e": "NODE_ENV=testing protractor"
   },
   "dependencies": {
     "@angular/animations": "^4.1.3",
