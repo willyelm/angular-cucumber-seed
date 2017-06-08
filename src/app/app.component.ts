@@ -23,6 +23,6 @@ export class AppComponent {
     dateOfBirth: new Date(1989, 0, 28)
   }
   constructor () {
-    console.log("Current User", this.user)
+    console.log('Current User', this.user)
   }
 }

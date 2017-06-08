@@ -5,9 +5,11 @@
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
     "build": "NODE_ENV=production webpack",
+    "prebuild": "npm run lint",
     "test": "NODE_ENV=testing karma start",
     "webdriver": "webdriver-manager update",
-    "e2e": "NODE_ENV=testing protractor"
+    "e2e": "NODE_ENV=testing protractor",
+    "lint": "tslint --project tsconfig.json src/**/*.ts"
   },
   "dependencies": {
     "@angular/animations": "^4.1.3",
@@ -29,6 +31,7 @@
     "@angular/compiler-cli": "^4.1.3",
     "@types/jasmine": "^2.5.51",
     "@types/node": "^7.0.28",
+    "codelyzer": "^3.0.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -51,6 +54,7 @@
     "style-loader": "^0.18.2",
     "to-string-loader": "^1.1.5",
     "ts-node": "^3.0.6",
+    "tslint": "^5.4.3",
     "typescript": "^2.3.4",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1",

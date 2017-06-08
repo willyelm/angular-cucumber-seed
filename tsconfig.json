@@ -1,20 +1,22 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "rootDir": ".",
     "outDir": "lib",
     "baseUrl": "src",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "target": "es5",
-    "noImplicitAny": false,
     "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "es2016",
       "dom"
-    ],
-    "skipLibCheck": true,
-    "rootDir": "."
+    ]
   }
 }
