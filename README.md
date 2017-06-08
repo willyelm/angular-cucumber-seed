@@ -3,7 +3,7 @@
 This project is an application skeleton for a [Angular4][angular4] web app. You can use it
 to quickly bootstrap your angular4 projects and dev environment for these projects.
 
-The project is preconfigured to install the Angular 4 and a bunch of development and testing tools.
+The project is preconfigured to install the Angular 4 and a bunch of development and testing tools including linter which follows the angular style guide found in https://angular.io/styleguide.
 
 ### Usage
 
