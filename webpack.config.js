@@ -42,6 +42,11 @@ function getWebpackCompiler () {
   return new AotPlugin(options)
 }
 
+function chunksSortMethod (a, b) {
+  let priority = ['main', 'vendor', 'polyfills']
+  return priority.indexOf(b.names[0])
+}
+
 const webpackConfig = {
   context: __dirname,
   resolve: {
@@ -118,7 +123,7 @@ const webpackEnv = {
       new HtmlPlugin({
         filetype: 'pug',
         template: path.join(SOURCE_PATH, 'index.pug'),
-        // chunksSortMode: 'none',
+        chunksSortMode: chunksSortMethod,
         hash: true
       }),
       new NormalModuleReplacementPlugin(
@@ -160,6 +165,7 @@ const webpackEnv = {
       new HtmlPlugin({
         filetype: 'pug',
         template: path.join(SOURCE_PATH, 'index.pug'),
+        chunksSortMode: chunksSortMethod,
         hash: true
       })
     ],
