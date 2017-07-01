@@ -22,7 +22,7 @@ const STATS = {
   version: false
 }
 
-function getWebpackCompiler () {
+function getAotOptions () {
   let options = {
     tsConfigPath: './src/tsconfig.app.json'
   }
@@ -39,7 +39,7 @@ function getWebpackCompiler () {
       options.mainPath = path.resolve(__dirname, SOURCE_PATH, 'main.ts')
       break
   }
-  return new AotPlugin(options)
+  return options;
 }
 
 function chunksSortMethod (a, b) {
@@ -54,7 +54,8 @@ const webpackConfig = {
     modules: [
       path.resolve(__dirname, 'node_modules'),
       SOURCE_PATH
-    ]
+    ],
+    symlinks: true
   },
   output: {
     path: OUTPUT_PATH,
@@ -62,7 +63,7 @@ const webpackConfig = {
     filename: '[name].bundle.js'
   },
   plugins: [
-    getWebpackCompiler(),
+    new AotPlugin(getAotOptions()),
     new ProgressPlugin(),
     new ExtractTextPlugin('main.css'),
     new DefinePlugin({
@@ -84,7 +85,7 @@ const webpackConfig = {
       })
   ],
   module: {
-    loaders: [
+    rules: [
       // { test: /\.scss$/, exclude: TEST_ASSETS, loaders: ['raw-loader', 'sass-loader'] },
       { test: TEST_ASSETS, use: ExtractTextPlugin.extract({
         fallback: 'style-loader',

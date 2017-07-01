@@ -5,10 +5,6 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 
-//
-// http://willyelm.com
-//
-
 @NgModule({
   declarations: [
     AppComponent
@@ -18,7 +14,6 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
