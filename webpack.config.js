@@ -42,6 +42,16 @@ function getAotOptions () {
   return options;
 }
 
+function getHTMLOptions () {
+  return {
+    filetype: 'pug',
+    template: path.join(SOURCE_PATH, 'index.pug'),
+    favicon: './src/favicon.ico',
+    chunksSortMode: chunksSortMethod,
+    hash: true
+  };
+}
+
 function chunksSortMethod (a, b) {
   let priority = ['main', 'vendor', 'polyfills']
   return priority.indexOf(b.names[0])
@@ -69,13 +79,6 @@ const webpackConfig = {
     new DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-      }
-    }),
-    new optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      chunks: ['main'],
-      minChunks(module) {
-        return /node_modules/.test(module.resource)
       }
     }),
     new optimize.OccurrenceOrderPlugin(true),
@@ -115,18 +118,13 @@ const webpackConfig = {
 const webpackEnv = {
   // Production
   production: {
-    // devtool: 'source-map',
+    devtool: 'source-map',
     entry: {
       polyfills: path.join(SOURCE_PATH, 'polyfills.ts'),
       main: path.join(SOURCE_PATH, 'main.ts')
     },
     plugins: [
-      new HtmlPlugin({
-        filetype: 'pug',
-        template: path.join(SOURCE_PATH, 'index.pug'),
-        chunksSortMode: chunksSortMethod,
-        hash: true
-      }),
+      new HtmlPlugin(getHTMLOptions()),
       new NormalModuleReplacementPlugin(
         /src\/environments\/environment.ts/,
         'environment.production.ts'
@@ -152,6 +150,13 @@ const webpackEnv = {
           join_vars: true,
           negate_iife: false
         }
+      }),
+      new optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        chunks: ['main'],
+        minChunks(module) {
+          return /node_modules/.test(module.resource)
+        }
       })
     ]
   },
@@ -163,11 +168,13 @@ const webpackEnv = {
       main: path.join(SOURCE_PATH, 'main.ts')
     },
     plugins: [
-      new HtmlPlugin({
-        filetype: 'pug',
-        template: path.join(SOURCE_PATH, 'index.pug'),
-        chunksSortMode: chunksSortMethod,
-        hash: true
+      new HtmlPlugin(getHTMLOptions()),
+      new optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        chunks: ['main'],
+        minChunks(module) {
+          return /node_modules/.test(module.resource)
+        }
       })
     ],
     devServer: {
@@ -184,7 +191,9 @@ const webpackEnv = {
     }
   },
   // Testing
-  testing: {}
+  testing: {
+    devtool: 'inline-source-map'
+  }
 }
 
 module.exports = webpackMerge(webpackConfig, webpackEnv[process.env.NODE_ENV]);

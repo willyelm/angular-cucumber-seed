@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable, Observer } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app works!';
-  constructor() {}
 }

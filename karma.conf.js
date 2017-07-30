@@ -1,15 +1,15 @@
-const webpackConfig = require('./webpack.config')
+const webpackConfig = require('./webpack.config');
 
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
     plugins: [
-      require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-webpack'),
-      require('karma-sourcemap-loader'),
-      require('karma-jasmine-html-reporter')
+      require('karma-jasmine'),
+      require('karma-spec-reporter'),
+      require('karma-sourcemap-loader')
     ],
     client:{
       clearContext: false
@@ -18,7 +18,7 @@ module.exports = function (config) {
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
-      './src/test.ts': [ 'webpack', 'sourcemap' ]
+      './src/test.ts': [ 'webpack','sourcemap' ]
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
@@ -27,7 +27,7 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: webpackConfig.stats
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['spec'],
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
